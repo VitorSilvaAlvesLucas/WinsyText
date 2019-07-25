@@ -4,9 +4,9 @@ try:
     from tkinter import filedialog
     from tkinter.font import Font
     from tkinter import *
-    from os import *
     import pyautogui
     import io
+    import os
 except Exception as error:
     messagebox.showerror("Warning","{}".format(error))
 
@@ -14,8 +14,8 @@ class Root():
     def __init__(self,main_tab):
         ##### Window properties ######
         self.main_tab = main_tab
-        self.main_tab.title("Cleaner")
         self.main_tab.state("zoomed")
+        self.main_tab.title("Cleaner")
         self.main_tab.minsize(600, 300)
         ##### Start Scrolled Text #####
         self.scrolled_text()
@@ -34,7 +34,7 @@ class Root():
         object_menu.add_cascade(label="Edit",menu=edit_menu_bar)
         object_menu.add_cascade(label="View",menu=view_menu_bar)
         object_menu.add_cascade(label="Preferences",command=self.preferences_menu_bar)
-        object_menu.add_cascade(label="Help",menu=help_menu_bar)
+        object_menu.add_cascade(label="Help",command=self.help)
         ###### Menu bar options #######
         file_menu_bar.add_command(label="Save",command=self.save_as_file)
         file_menu_bar.add_command(label="Open",command=self.open_as_file)
@@ -45,6 +45,9 @@ class Root():
         edit_menu_bar.add_command(label="Paste",command=self.paste)
         edit_menu_bar.add_command(label="Leave all caps",command=self.leave_all_caps)
         edit_menu_bar.add_command(label="Leave all lowercase",command=self.leave_all_lowercase)
+        view_menu_bar.add_command(label="License",command=self.license)
+        view_menu_bar.add_command(label="FullScreen",command=self.fullscreen)
+        view_menu_bar.add_command(label="Disable FullScreen",command=self.disable_fullscreen)
         self.main_tab.configure(menu=object_menu)
     def scrolled_text(self):
         self.scrolled_text_var = ScrolledText(self.main_tab,width=1,height=1,bg="#131313",fg="white",font=("Arial", 11))
@@ -106,14 +109,14 @@ class Root():
             ##### Window properties ######
             object_preferences = Tk()
             object_preferences["bg"] = "#F2F2F2"
-            object_preferences.geometry("200x200+50+20")
+            object_preferences.geometry("220x188+50+50")
             object_preferences.title("Preferences")
             object_preferences.resizable(False,False)
             ########## Widgets ###########
-            label_background_color = Label(object_preferences,text="Background color:")
-            label_text_color = Label(object_preferences,text="Text color:")
-            label_font_type = Label(object_preferences,text="Type font:")
-            label_font_size = Label(object_preferences,text="Font size:")
+            label_background_color = Label(object_preferences,text="Back color:",font=("Calibri"))
+            label_text_color = Label(object_preferences,text="Text color:",font=("Calibri"))
+            label_font_type = Label(object_preferences,text="Type font:",font=("Calibri"))
+            label_font_size = Label(object_preferences,text="Font size:",font=("Calibri"))
             #### Statement of available resources ####
             fonts_disp = ["Calibri","Cambria","Courier","Impact","Georgia","ComicSansMS","Century","Constantia","Fixedsys"]
             self.fonts_var = StringVar(object_preferences)
@@ -137,11 +140,11 @@ class Root():
             to_choose_size = OptionMenu(object_preferences,self.size_var,*size_disp)
             to_choose_background_color = OptionMenu(object_preferences,self.background_color_var,*background_color_disp)
             ####### Start Widgets ########
-            label_background_color.grid(row=0,column=0,padx=5,pady=5)
+            label_background_color.grid(row=0,column=0,padx=5,pady=10)
             label_text_color.grid(row=1,column=0,padx=0,pady=10)
             label_font_type.grid(row=2,column=0,padx=0,pady=10)
             label_font_size.grid(row=3,column=0,padx=0,pady=10)
-            to_choose_colors.grid(row=0,column=1,padx=5,pady=5)
+            to_choose_colors.grid(row=0,column=1,padx=5,pady=10)
             to_choose_fonts.grid(row=1,column=1,padx=5,pady=5)
             to_choose_size.grid(row=2,column=1,padx=5,pady=5)
             to_choose_background_color.grid(row=3,column=1,padx=5,pady=5)
@@ -157,6 +160,24 @@ class Root():
     def change_size(self,*args):
         font_object = Font(size=self.size_var.get(),family=self.fonts_var.get())
         self.scrolled_text_var.config(font=font_object)
+    def help(self):
+        try:
+            os.system("start https://github.com/VitorSilvaAlvesLucas/CoderNEText-v1.0")
+        except Exception as error:
+            messagebox.showerror("Warning","{}".format(error))
+    def fullscreen(self):
+        self.main_tab.resizable(False,False)
+        self.main_tab.state("zoomed")
+    def disable_fullscreen(self):
+        self.main_tab.resizable(True,True)
+        self.main_tab.state("normal")
+    def license(self):
+        os.system("cls")
+        os.system("@echo off")
+        os.system("cls")
+        read_current_dir = open("current_directory.txt","+r")
+        converter_current_dir = read_current_dir.read().strip()
+        io.open(converter_current_dir+"\LICENSE.txt")
 
 object_tk = Tk()
 Root(object_tk)

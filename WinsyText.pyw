@@ -24,7 +24,7 @@ class Root():
         self.main_tab = main_tab
         self.main_tab.state("zoomed")
         self.main_tab["bg"] = "#424242"
-        self.main_tab.title("Cleaner")
+        self.main_tab.title("WinsyText")
         self.main_tab.minsize(600, 300)
         ######## Define icon #########
         self.main_tab.iconbitmap("{}\icon_winsytext.ico".format(self.final_directory))
@@ -36,8 +36,8 @@ class Root():
         ####### Start Menu Bar ########
         self.options_menu()
         ######## Info Status ##########
-        self.info_status_var = Label(self.main_tab,text="CoderNEText-v1.0 | GitHub: https://github/VitorSilvaAlvesLucas/WinsyText-v1.0",
-        bg="#424242",fg="white",font=("Arial",10))
+        self.info_status_var = Label(self.main_tab,text="WinsyText-v1.0 | GitHub: https://github/VitorSilvaAlvesLucas/WinsyText-v1.0",
+        bg="#424242",fg="#00BFFF",font=("Arial",10))
         self.info_status()
     def info_status(self):
         self.info_status_var.pack()

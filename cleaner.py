@@ -2,6 +2,7 @@ try:
     from tkinter.scrolledtext import ScrolledText
     from tkinter import messagebox
     from tkinter import filedialog
+    from tkinter.font import Font
     from tkinter import *
     from os import *
     import pyautogui
@@ -11,12 +12,10 @@ except Exception as error:
 
 class Root():
     def __init__(self,main_tab):
-        #### Propriedades da janela ###
+        ##### Window properties ######
         self.main_tab = main_tab
         self.main_tab.title("Cleaner")
-        self.main_tab["bg"] = "gray"
         self.main_tab.state("zoomed")
-        self.main_tab["bg"] = "#1B1B1B"
         self.main_tab.minsize(600, 300)
         ##### Start Scrolled Text #####
         self.scrolled_text()
@@ -34,7 +33,7 @@ class Root():
         object_menu.add_cascade(label="File",menu=file_menu_bar)
         object_menu.add_cascade(label="Edit",menu=edit_menu_bar)
         object_menu.add_cascade(label="View",menu=view_menu_bar)
-        object_menu.add_cascade(label="Preferences",menu=preferences_menu_bar)
+        object_menu.add_cascade(label="Preferences",command=self.preferences_menu_bar)
         object_menu.add_cascade(label="Help",menu=help_menu_bar)
         ###### Menu bar options #######
         file_menu_bar.add_command(label="Save",command=self.save_as_file)
@@ -102,6 +101,62 @@ class Root():
             self.scrolled_text_var.insert(0.0,transform_text_for_lower)
         except Exception as error:
             messagebox.showerror("Warning","{}".format(error))
+    def preferences_menu_bar(self):
+        try:
+            ##### Window properties ######
+            object_preferences = Tk()
+            object_preferences["bg"] = "#F2F2F2"
+            object_preferences.geometry("200x200+50+20")
+            object_preferences.title("Preferences")
+            object_preferences.resizable(False,False)
+            ########## Widgets ###########
+            label_background_color = Label(object_preferences,text="Background color:")
+            label_text_color = Label(object_preferences,text="Text color:")
+            label_font_type = Label(object_preferences,text="Type font:")
+            label_font_size = Label(object_preferences,text="Font size:")
+            #### Statement of available resources ####
+            fonts_disp = ["Calibri","Cambria","Courier","Impact","Georgia","ComicSansMS","Century","Constantia","Fixedsys"]
+            self.fonts_var = StringVar(object_preferences)
+            self.fonts_var.set("Calibri")
+            self.fonts_var.trace("w",self.change_font)
+            size_disp = [8,9,10,11,12,14,16,18,20,22,24,28,36,42,68]
+            self.size_var = IntVar(object_preferences)
+            self.size_var.set(12)
+            self.size_var.trace("w",self.change_size)
+            colors_disp = ["red","blue","yellow","green","orange","black","white","cyan","magenta"]
+            self.colors_var = StringVar(object_preferences)
+            self.colors_var.set("white")
+            self.colors_var.trace("w",self.change_color)
+            background_color_disp = ["black","white","gray"]
+            self.background_color_var = StringVar(object_preferences)
+            self.background_color_var.set("#131313")
+            self.background_color_var.trace("w",self.change_background_color)
+            ####### OptionMenu #########
+            to_choose_colors = OptionMenu(object_preferences,self.colors_var,*colors_disp)
+            to_choose_fonts = OptionMenu(object_preferences,self.fonts_var,*fonts_disp)
+            to_choose_size = OptionMenu(object_preferences,self.size_var,*size_disp)
+            to_choose_background_color = OptionMenu(object_preferences,self.background_color_var,*background_color_disp)
+            ####### Start Widgets ########
+            label_background_color.grid(row=0,column=0,padx=5,pady=5)
+            label_text_color.grid(row=1,column=0,padx=0,pady=10)
+            label_font_type.grid(row=2,column=0,padx=0,pady=10)
+            label_font_size.grid(row=3,column=0,padx=0,pady=10)
+            to_choose_colors.grid(row=0,column=1,padx=5,pady=5)
+            to_choose_fonts.grid(row=1,column=1,padx=5,pady=5)
+            to_choose_size.grid(row=2,column=1,padx=5,pady=5)
+            to_choose_background_color.grid(row=3,column=1,padx=5,pady=5)
+            object_preferences.mainloop()
+        except Exception as error:
+            messagebox.showerror("Warning","{}".format(error))
+    def change_background_color(self,*args):
+        self.scrolled_text_var["bg"] = self.background_color_var.get()
+    def change_font(self,*args):
+        self.scrolled_text_var["font"] = self.fonts_var.get()
+    def change_color(self,*args):
+        self.scrolled_text_var["fg"] = self.colors_var.get()
+    def change_size(self,*args):
+        font_object = Font(size=self.size_var.get(),family=self.fonts_var.get())
+        self.scrolled_text_var.config(font=font_object)
 
 object_tk = Tk()
 Root(object_tk)

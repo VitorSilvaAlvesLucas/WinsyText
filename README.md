@@ -8,7 +8,7 @@ Have windows 7
 ___________________________________________________________________________________________________________________________________
 # How to install
 ___________________________________________________________________________________________________________________________________
-Click clone or download, after downloading unzip the .zip file and open WinsyText.exe
+Click clone or download, after downloading unzip the .zip file and open WinsyText.exe (It is important to leave all files in one folder if you prefer to create a desktop shortcut of WinsyText.exe)
 ___________________________________________________________________________________________________________________________________
 # License
 ___________________________________________________________________________________________________________________________________

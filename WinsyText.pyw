@@ -1,3 +1,6 @@
+#-------------------------------------------------------#
+# https://www.github.com/VitorSilvaAlvesLucas/CalcPy-v1.0
+#-------------------------------------------------------#
 try:
     from tkinter import X, Y, BOTTOM, RIGHT, LEFT, Y, HORIZONTAL
     from tkinter.scrolledtext import ScrolledText

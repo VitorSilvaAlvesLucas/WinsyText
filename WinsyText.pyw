@@ -1,23 +1,21 @@
-#-------------------------------------------------------#
-# https://www.github.com/VitorSilvaAlvesLucas/CalcPy-v1.0
-#-------------------------------------------------------#
 try:
     from tkinter import X, Y, BOTTOM, RIGHT, LEFT, Y, HORIZONTAL
     from tkinter.scrolledtext import ScrolledText
     from tkinter import messagebox
     from tkinter import filedialog
     from tkinter.font import Font
+    from getpass import getuser
     from tkinter import *
+    import os
     import pyautogui
     import io
-    import os
 except Exception as error:
     messagebox.showerror("Warning","{}".format(error))
 
 class Root():
     def __init__(self,main_tab):
         ### Find current directory ###
-        self.directory = os.getcwd()
+        self.directory = getuser()
         ###### Window properties ######
         self.main_tab = main_tab
         self.main_tab.protocol("WM_DELETE_WINDOW",self.exit_all_windows)
@@ -26,7 +24,7 @@ class Root():
         self.main_tab.title("WinsyText")
         self.main_tab.minsize(600, 300)
         ######## Define icon #########
-        self.main_tab.iconbitmap("{}\icon_winsytext.ico".format(self.directory))
+        self.main_tab.iconbitmap("/home/{}/WinsyText-v1.0/icon_winsytext.ico".format(self.directory))
         ########### Frame #############
         self.frame = Frame(self.main_tab)
         self.frame.pack(fill=BOTH,expand=1)
@@ -98,7 +96,7 @@ class Root():
         horizontal_scrollbar.config(command=self.scrolled_text_var.xview)
     def save_as_file(self):
         try:
-            self.main_tab.filename = filedialog.asksaveasfilename(initialdir="/",title="Select file",filetypes=(("txt files","*.txt"),("all files","*.*")))
+            self.main_tab.filename = filedialog.asksaveasfilename(initialdir="/",title="Select file",filetypes=(("text files","*.txt"),("all files","*.*")))
             save_file = io.open(self.main_tab.filename+".txt","w")
             text = str(self.scrolled_text_var.get(1.0,END))
             save_file.write(text)
@@ -106,7 +104,7 @@ class Root():
             messagebox.showerror("Warning","{}".format(error))
     def open_as_file(self):
         try:
-            self.main_tab.filename = filedialog.askopenfilename(initialdir="/",title="Select file",filetypes=(("txt files","*.txt"),("all files","*,*")))
+            self.main_tab.filename = filedialog.askopenfilename(initialdir="/",title="Select file",filetypes=(("text files","*.txt"),("all files","*,*")))
             open_file_content = io.open(self.main_tab.filename,"+r")
             read_file_content = open_file_content.read()
             self.scrolled_text_var.delete(0.0,END)
@@ -157,7 +155,7 @@ class Root():
             self.object_preferences.title("Preferences")
             self.object_preferences.resizable(False,False)
             ######## Define icon #########
-            self.object_preferences.iconbitmap("{}\icon_winsytext.ico".format(self.directory))
+            self.object_preferences.iconbitmap("/home/{}/WinsyText-v1.0/icon_winsytext.ico".format(self.directory))
             ########## Widgets ###########
             label_font_type = Label(self.object_preferences,text="Type font:",font=("Calibri"))
             label_font_size = Label(self.object_preferences,text="Font size:",font=("Calibri"))
@@ -200,7 +198,7 @@ class Root():
             self.object_tools["bg"] = "#F2F2F2"
             self.object_tools.geometry("+70+50")
             self.object_tools.title("Tools")
-            self.object_tools.iconbitmap("{}\icon_winsytext.ico".format(self.directory))
+            self.object_tools.iconbitmap("/home/{}/WinsyText-v1.0/icon_winsytext.ico".format(self.directory))
             self.object_tools.resizable(False,False)
             #####   Widgets count   #####
             label_count = Label(self.object_tools,text="How many times this word appeared:",font="Calibri")
